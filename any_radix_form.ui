@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>373</width>
+    <height>312</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>AnyRadix</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="inputNumLabel">
+      <property name="text">
+       <string>Исходное число:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="inputNumField"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="inputNumRadixLabel">
+      <property name="text">
+       <string>СС исходного числа:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="inputNumRadixField"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="resultRadixLabel">
+      <property name="text">
+       <string>СС результата:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="resultRadixField"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="resultLabel">
+      <property name="text">
+       <string>Результат:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="resultField"/>
+    </item>
+    <item>
+     <widget class="Line" name="separator">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="translateButton">
+        <property name="text">
+         <string>Расчёт</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="clearButton">
+        <property name="text">
+         <string>Очистить</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>373</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="fileSubmenu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="fileExitAction"/>
+   </widget>
+   <widget class="QMenu" name="helpSubmenu">
+    <property name="title">
+     <string>Справка</string>
+    </property>
+    <addaction name="aboutAction"/>
+   </widget>
+   <addaction name="fileSubmenu"/>
+   <addaction name="helpSubmenu"/>
+  </widget>
+  <action name="fileExitAction">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="aboutAction">
+   <property name="text">
+    <string>Об Авторах</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
