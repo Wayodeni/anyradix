@@ -5,6 +5,7 @@
 Конструктор класса принимает на вход число, основание его СС, и СС результирующего числа.
 Для расчета результата вызывается метод translate(), который возвращает переменную типа string.
 '''
+# TODO: Зарефакторить "исключения". Вынести их в отдельный строковый метод.
 import string
 
 
@@ -15,7 +16,7 @@ class Translator():
         self.result_radix = result_radix
 
 
-    def translate(self):
+    def translate(self) -> str:
         # Если пустой ввод, то кидаем NoInputException
         if self.input_number == '' or self.input_number_radix == '' or self.result_radix == '':
             return 'NoInputException'
@@ -27,37 +28,47 @@ class Translator():
             or str(self.result_radix).isdigit() == False:
             return 'RedundantSymbolsException'
 
-        # Если число превышает основание своей сс, кидаем RadixExceedationException.
-        if Translator.is_exceeds_radix(self.input_number, self.input_number_radix) == True:
-            return 'RadixExceedationException'
+        # После проверки оснований сс на то, что они состоят только из чисел, можем преобразовать их в int.
+        self.input_number_radix = int(self.input_number_radix)
+        self.result_radix = int(self.result_radix)
+
+        # Если любое из оснований сс превышает диапазон 1-37, то кидаем TooBigRadixException
+        if self.input_number_radix not in range(1, 37) or self.result_radix not in range(1, 37):
+            return 'WrongRadixException'
 
         # Если на вход было подано число в унарной сс, но указана другая сс, то кидаем UnarySystemRadixException.
         if set(self.input_number) == {'|'} and self.input_number_radix != 1:
             return 'UnarySystemRadixException'
+
+        # Если число превышает основание своей сс, кидаем RadixExceedationException.
+        if Translator.is_exceeds_radix(self.input_number, self.input_number_radix) == True:
+            return 'RadixExceedationException'
+
+        
         
         # Нуль во всех сс есть нуль.
         if self.input_number == '0':
             return '0'
 
-        if self.input_number_radix != (10, 1):
-            input_number_in_10th_radix = Translator.translate_to_10th_radix(self.input_number, self.input_number_radix)
-        elif self.input_number_radix == 1:
+        # Перевод введенного числа в 10сс
+        if self.input_number_radix == 1:
             input_number_in_10th_radix = self.input_number.count('|')
-        else:
+        elif self.input_number_radix == 10:
             input_number_in_10th_radix = int(self.input_number)
-
+        else:
+            input_number_in_10th_radix = Translator.translate_to_10th_radix(self.input_number, self.input_number_radix)
+        
+        # Формирование результата
+        n = input_number_in_10th_radix
+        result = ''
         if self.result_radix == 1:
             return input_number_in_10th_radix * '|'
         elif self.result_radix in range(2, 11):
-            n = input_number_in_10th_radix
-            result = ''
             while n:
                 result = str(n % self.result_radix) + result
                 n //= self.result_radix
             return result
-        elif self.result_radix in range(11, 37):
-            n = input_number_in_10th_radix
-            result = ''
+        else:
             while n:
                 result = Translator.number_to_literal(n % self.result_radix) + result
                 n //= self.result_radix
@@ -85,10 +96,10 @@ class Translator():
 
 
     @staticmethod
-    def literal_to_number(literal):
+    def literal_to_number(literal: str) -> int:
         # Если на вход пришла цифра не в буквенном виде, то возвращаем ее. 
         if literal.isdigit():
-            return literal
+            return int(literal)
 
         # Генерация словаря, в котором содержится соответствие букв английского алфавита цифрам в 10 СС
         alphabet = {}
@@ -101,7 +112,7 @@ class Translator():
 
 
     @staticmethod
-    def number_to_literal(numeral):
+    def number_to_literal(numeral: int) -> str:
         # Если на вход пришла цифра меньше 10, то для нее не будет буквы в СС > 10. Преобразовываем в str и возвращаем.
         if numeral < 10:
             return str(numeral)
@@ -117,9 +128,9 @@ class Translator():
 
 
     @staticmethod
-    def is_exceeds_radix(input_number, input_number_radix):
+    def is_exceeds_radix(input_number: str, input_number_radix: int) -> bool:
         # Для унарной СС
-        if set(input_number) == {'|'} and input_number_radix >= 1:
+        if set(input_number) == {'|'}:
             return False
         
         if input_number.isdigit():
@@ -128,6 +139,8 @@ class Translator():
         else:
             if Translator.literal_to_number(max(input_number)) >= input_number_radix:
                 return True
+
+        return False
 
 
 def main():

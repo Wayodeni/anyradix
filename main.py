@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 import any_radix_frontend
 from any_radix_backend import Translator
 import sys
