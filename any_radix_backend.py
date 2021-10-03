@@ -84,7 +84,7 @@ class Translator():
         
         number_in_10th_radix = 0
         power_of_radix = len(input_number) - 1
-        if input_number_radix in range(1, 10):
+        if input_number_radix in range(1, 11):
             for numeral in input_number:
                 number_in_10th_radix += int(numeral) * input_number_radix**power_of_radix
                 power_of_radix -= 1 
