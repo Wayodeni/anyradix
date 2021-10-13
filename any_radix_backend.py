@@ -76,7 +76,7 @@ class Translator():
 
 
     @staticmethod
-    def translate_to_10th_radix(input_number, input_number_radix):
+    def translate_to_10th_radix(input_number: str, input_number_radix: int) -> int:
         # Для унарной СС
         if input_number_radix == 1:
             number_in_10th_radix = input_number.count('|')
