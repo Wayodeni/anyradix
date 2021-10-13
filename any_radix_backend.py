@@ -44,8 +44,6 @@ class Translator():
         if Translator.is_exceeds_radix(self.input_number, self.input_number_radix) == True:
             return 'RadixExceedationException'
 
-        
-        
         # Нуль во всех сс есть нуль.
         if self.input_number == '0':
             return '0'
